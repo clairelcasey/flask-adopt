@@ -1,10 +1,12 @@
 """Flask app for adopt app."""
 
-from flask import Flask
+from flask import Flask, render_template, redirect, flash
 
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
+
+from forms import AddPetForm
 
 app = Flask(__name__)
 
@@ -23,9 +25,33 @@ db.create_all()
 
 toolbar = DebugToolbarExtension(app)
 
+
 @app.route('/')
 def list_pets():
     """ List all pets. """
 
     pets = Pet.query.all()
-    return render_template("list.html", pets = pets)
+    return render_template("pet-list.html", pets=pets)
+
+
+@app.route('/add', methods=["GET", "POST"])
+def add_pet():
+    """ Render add pet form template or
+    handle adding pet if form has been filled out
+    and it is a POST request"""
+
+    form = AddPetForm()
+    if form.validate_on_submit():
+        new_pet = Pet(
+            name=form.name.data,
+            species=form.species.data,
+            photo_url=form.photo_url.data,
+            age=form.age.data,
+            notes=form.notes.data
+            )
+        db.session.add(new_pet)
+        db.session.commit()
+        flash(f"{new_pet.name} was added to the system!")
+        return redirect("/")
+    else:
+        return render_template("add-pet-form.html", form=form)
