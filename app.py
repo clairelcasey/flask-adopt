@@ -35,7 +35,7 @@ def list_pets():
 
 
 @app.route('/add', methods=["GET", "POST"])
-def add_pet():
+def add_pet(): # pet_add_form -- both shows and process the form
     """ Render add pet form template.
     Handle adding pet."""
 
@@ -58,12 +58,12 @@ def add_pet():
 
 
 @app.route('/<int:pet_id>', methods=["GET", "POST"])
-def show_edit_pet_form(pet_id):
+def show_edit_pet_form(pet_id): # pet_edit_form
     """ Show pet information and pet edit form.
     Handle editing a pet.  """
 
     pet = Pet.query.get_or_404(pet_id)
-    form = EditPetForm()
+    form = EditPetForm(obj=pet) #pass any object, it checks the form attribute names on that object. If form already has a new value, it will not use the one from the obj. Called polymorphism
 
     if form.validate_on_submit():
         pet.photo_url = form.photo_url.data
@@ -75,10 +75,10 @@ def show_edit_pet_form(pet_id):
         return redirect(f"/{pet_id}")
     else:
         # show current info for first request, show changed info on failed POST
-        if not form.photo_url.data:
-            form.photo_url.data = pet.photo_url
-        if not form.notes.data:
-            form.notes.data = pet.notes
-        form.available.data = pet.available
+        # if not form.photo_url.data:
+        #     form.photo_url.data = pet.photo_url
+        # if not form.notes.data:
+        #     form.notes.data = pet.notes
+        # form.available.data = pet.available
 
         return render_template("edit-pet-form.html", form=form, pet=pet)

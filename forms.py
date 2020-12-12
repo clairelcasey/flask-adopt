@@ -11,6 +11,7 @@ class AddPetForm(FlaskForm):
     name = StringField(
         "Pet Name", 
         validators=[InputRequired()])
+
     species = SelectField(
         "Species", 
         choices=[
@@ -19,9 +20,11 @@ class AddPetForm(FlaskForm):
             ('porcupine', 'Porcupine')
             ],
         validators=[InputRequired()])
+
     photo_url = StringField(
         "Photo URL", 
         validators=[Optional(), URL()])
+        
     age = SelectField(
         "Age",
         validators=[InputRequired()],
@@ -31,9 +34,11 @@ class AddPetForm(FlaskForm):
             ('adult', 'Senior'),
             ('senior', 'Senior')
             ])
+            
     notes = StringField(
         'Notes', 
         validators=[Optional()])
+        
     available = BooleanField(
         "Available",
         validators=[Optional()],
