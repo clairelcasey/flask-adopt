@@ -40,19 +40,21 @@ class AddPetForm(FlaskForm):
         default=True
     )
 
+
 class EditPetForm(FlaskForm):
     """ Form to edit an existing pet """
 
     photo_url = StringField(
-        "Photo URL", 
+        "Photo URL",
         validators=[Optional(), URL()])
     notes = StringField(
-        'Notes', 
+        'Notes',
         validators=[Optional()])
     available = SelectField(
-    "Available",
-    choices=[
-        ("True", 'yes'),
-        ("", 'no')],
+        "Available",
+        choices=[
+            ("True", 'yes'),
+            # empty string because bool just evaluates the string passed
+            ("", 'no')],
         coerce=bool
     )

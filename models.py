@@ -15,8 +15,9 @@ def connect_db(app):
     db.app = app
     db.init_app(app)
 
+
 class Pet(db.Model):
-    """ Ped model. """
+    """ Pet model. """
 
     __tablename__ = "pets"
     # __table_args__ = (42,)
@@ -48,7 +49,7 @@ class Pet(db.Model):
         nullable=False
     )
     available = db.Column(
-        db.Boolean, 
+        db.Boolean,
         nullable=False,
         default=True
     )
