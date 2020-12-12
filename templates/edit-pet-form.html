@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit A Pet {% endblock %}
+
+{% block content %}
+
+
+<div class="d-inline-flex flex-row col-9">
+    <div class='col-3'>
+        <img src="{{pet.photo_url}}" alt="" style="width:100%">
+    </div>
+    <div class='col-6 flex-column'>
+      <p>{{pet.name}}
+        {% if pet.available %}
+          <b>is available</b>
+        {% endif %}
+      </p>
+      <p> Pet Age: {{pet.age}}</p>
+      <p> Pet Species: {{pet.species}}</p>
+    </div>
+  </div>
+
+
+<form id="edit-pet-form" method="POST">
+    {{ form.hidden_tag() }}
+  
+    {% for field in form 
+        if field.widget.input_type != 'hidden' %}
+      <p>
+        {{ field.label }}
+        {{ field }}
+        {% for error in field.errors %}
+          {{ error }}
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Edit Pet</button>
+  
+  </form>
+  
+
+
+
+{% endblock %}

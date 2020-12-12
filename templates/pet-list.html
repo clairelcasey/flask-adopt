@@ -9,7 +9,7 @@
   <div class="d-inline-flex flex-column col-3">
     <img src="{{pet.photo_url}}" alt="" style="width:100%">
     <div>
-      <p><a href="">{{pet.name}}</a>
+      <p><a href="/{{pet.id}}">{{pet.name}}</a>
         {% if pet.available %}
           <b>is available</b>
         {% endif %}
